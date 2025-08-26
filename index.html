@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para kay Jaira</title>
+<style>
+/* --- Global Reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+  color: #333;
+  background: #fff; /* changed background to white */
+  overflow: hidden;
+}
+
+/* --- Background Animation (soft floating hearts) --- */
+.heart {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #ff5a5f;
+  transform: rotate(-45deg);
+  animation: float 8s infinite;
+  opacity: 0.7;
+  border-radius: 4px;
+}
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #ff5a5f;
+  border-radius: 50%;
+}
+.heart::before { top: -7.5px; left: 0; }
+.heart::after { left: 7.5px; top: 0; }
+
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0.5) rotate(-45deg); opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-50vh) scale(1.2) rotate(-45deg); opacity: 0; }
+}
+
+/* --- Profile Image --- */
+img {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease;
+  object-fit: cover; /* keep image fit square */
+}
+img:hover {
+  transform: scale(1.05);
+}
+
+/* --- Question Text --- */
+h2 {
+  font-size: 26px;
+  margin-bottom: 35px;
+}
+
+/* --- Buttons Container --- */
+.buttons {
+  display: flex;
+  gap: 25px;
+  position: relative;
+}
+
+button {
+  padding: 14px 28px;
+  font-size: 18px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+  min-width: 160px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Green and Red buttons */
+#ooBtn {
+  background: #4CAF50; /* green */
+}
+#ooBtn:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+#hindiBtn {
+  background: #f44336; /* red */
+}
+#hindiBtn:hover {
+  background: #e53935;
+}
+
+/* --- Popup --- */
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #333;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  z-index: 9999;
+  animation: popupAppear 0.3s ease forwards;
+}
+#popup h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+#popup iframe {
+  width: 100%;
+  height: 180px;
+  border: none;
+  border-radius: 12px;
+}
+@keyframes popupAppear {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<img src="https://i.imgur.com/QwjgRqv.jpeg" alt="Jaira Image">
+<h2>Mahal mo ba talaga ako, Jaira?</h2>
+
+<div class="buttons">
+  <button id="ooBtn">Oo sobra</button>
+  <button id="hindiBtn">Hindi</button>
+</div>
+
+<div id="popup">
+  <h3>Alam ko namannnnnn </h3>
+  <iframe id="ytVideo" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<script>
+const hindiBtn = document.getElementById("hindiBtn");
+const ooBtn = document.getElementById("ooBtn");
+const popup = document.getElementById("popup");
+const ytVideo = document.getElementById("ytVideo");
+
+const phrases = [
+  "Bakit naman ganun?",
+  "Hindi ka sigurado ha",
+  "Sana wag muna",
+  "Teka, nag-iisip pa ako",
+  "Di ko alam boss",
+  "Baka magsisi ka",
+  "Huwag muna dito",
+  "Wait lang",
+  "Parang risky yan",
+  "Seriously?"
+];
+
+// Button evasion effect
+hindiBtn.addEventListener("click", () => {
+  const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+  hindiBtn.textContent = phrase;
+
+  const range = 250;
+  const offsetX = Math.random() * range - range / 2;
+  const offsetY = Math.random() * range - range / 2;
+  hindiBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+});
+
+// Show popup with autoplay video
+ooBtn.addEventListener("click", () => {
+  ytVideo.src = "https://www.youtube.com/embed/fixQeWIGxxM?autoplay=1&controls=0&modestbranding=1&rel=0";
+  popup.style.display = "block";
+});
+
+// Floating hearts effect
+for(let i=0; i<30; i++){
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.animationDuration = 5 + Math.random() * 5 + 's';
+  heart.style.width = heart.style.height = 10 + Math.random() * 15 + 'px';
+  document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
